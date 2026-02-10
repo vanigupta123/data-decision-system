@@ -1,7 +1,5 @@
 from model.loader import load_model
-import torch
-from app import app
+from fastapi import Request
 
-def get_model():
-    model = app.state.model
-    return model
+def get_model(request: Request):
+    return request.app.state.model
