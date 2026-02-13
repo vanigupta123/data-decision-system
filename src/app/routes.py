@@ -1,5 +1,5 @@
 import random
-from fastapi import APIRouter
+from fastapi import APIRouter, Depends
 from metrics.timer import timer
 from pipeline.ingest import PredictRequest, ingest
 from pipeline.preprocess import preprocess
@@ -17,7 +17,7 @@ def read_root():
     return {"message": "Hello, World!"}
 
 @router.post("/predict")
-def predict(request: PredictRequest):
+def predict(request: PredictRequest, model: Depends(get_model)):
     timings = {}
     try:
         with timer() as t:
